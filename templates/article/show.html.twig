@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ article.title }}</h1>
+            <p class="text-muted">
+                <small>{{ article.createdAt|date('d/m/Y') }}</small>
+                {% if article.category %}
+                    • <a href="{{ path('app_category_show', {id: article.category.id}) }}">
+                        {{ article.category.name }}
+                    </a>
+                {% endif %}
+            </p>
+
+            {% if article.tags is not empty %}
+                <div class="mb-3">
+                    {% for tag in article.tags %}
+                        <span class="badge bg-secondary">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mb-5">
+                {{ article.content|nl2br }}
+            </div>
+
+            {# Commentaires #}
+            <h3 class="mb-3">💬 Commentaires ({{ article.comments|length }})</h3>
+
+            {% if article.comments is empty %}
+                <p class="text-muted">Aucun commentaire pour le moment.</p>
+            {% else %}
+                {% for comment in article.comments %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ comment.authorName }}</h6>
+                            <p class="card-text text-muted">
+                                <small>{{ comment.createdAt|date('d/m/Y') }}</small>
+                            </p>
+                            <p class="card-text">{{ comment.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {# Formulaire de commentaire #}
+            <h4 class="mt-4">Laisser un commentaire</h4>
+            {{ form_start(commentForm) }}
+                <div class="mb-3">
+                    {{ form_label(commentForm.authorName, 'Votre nom') }}
+                    {{ form_widget(commentForm.authorName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(commentForm.content, 'Votre commentaire') }}
+                    {{ form_widget(commentForm.content, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                </div>
+                <button type="submit" class="btn btn-dark">Envoyer</button>
+            {{ form_end(commentForm) }}
+        </div>
+    </div>
+{% endblock %}

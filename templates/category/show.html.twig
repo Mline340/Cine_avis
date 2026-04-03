@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CinéLog - {{ category.name }}{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">📂 {{ category.name }}</h1>
+
+    {% if category.articles is empty %}
+        <p class="text-muted">Aucun article dans cette catégorie.</p>
+    {% else %}
+        <div class="row">
+            {% for article in category.articles %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <p class="card-text text-muted">
+                                <small>{{ article.createdAt|date('d/m/Y') }}</small>
+                            </p>
+                            <p class="card-text">{{ article.content|slice(0, 150) }}...</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path('app_article_show', {id: article.id}) }}" class="btn btn-dark btn-sm">
+                                Lire la suite
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <a href="{{ path('app_category_index') }}" class="btn btn-secondary mt-3">
+        ← Retour aux catégories
+    </a>
+{% endblock %}

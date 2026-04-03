@@ -23,10 +23,10 @@ class Article
     private ?string $content = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $creatAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updateAt = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
@@ -79,26 +79,26 @@ class Article
         return $this;
     }
 
-    public function getCreatAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->creatAt;
+        return $this->createdAt;
     }
 
-    public function setCreatAt(\DateTimeImmutable $creatAt): static
+    public function setCreatedAt(\DateTimeImmutable $creatAt): static
     {
-        $this->creatAt = $creatAt;
+        $this->createdAt = $creatAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdateAt(?\DateTimeImmutable $updateAt): static
+    public function setUpdatedAt(?\DateTimeImmutable $updateAt): static
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updateAt;
 
         return $this;
     }
